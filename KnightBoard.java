@@ -1,7 +1,7 @@
 public class KnightBoard {
-  int[][] data;
+  int[][] board;
   public KnightBoard(int rows, int cols) {
-    data = new int[rows][cols];
+    board = new int[rows][cols];
   }
   public String toString() {
     String ans = "";
@@ -15,10 +15,8 @@ public class KnightBoard {
       if (board[x][board[x].length-1] < 10) {
         ans += " ";
       }
-      ans += board[x][board[x].length];
-      if (x != board.length-1) {
-        ans += "\n";
-      }
+      ans += board[x][board[x].length-1];
+      ans += "\n";
     }
     return ans;
   }
