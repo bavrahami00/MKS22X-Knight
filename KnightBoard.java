@@ -22,4 +22,24 @@ public class KnightBoard {
     }
     return ans;
   }
+  public boolean add(int row, int col, int value) {
+    if (board[row][col] != 0) {
+      return false;
+    }
+    board[row][col] = value;
+    return true;
+  }
+  public void remove(int row, int col) {
+    board[row][col] = 0;
+  }
+  private boolean isEmpty() {
+    for (int x = 0; x < board.length; x++) {
+      for (int i = 0; i < board[0].length; i++) {
+        if (!add(x,i,0)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }
