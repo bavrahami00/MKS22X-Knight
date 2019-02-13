@@ -55,7 +55,11 @@ public class KnightBoard {
     catch (ArrayIndexOutOfBoundsException a) {
       throw new IllegalArgumentException();
     }
-    return solveHelper(startRow,startCol,1);
+    boolean ans = solveHelper(startRow,startCol,1);
+    if (!ans) {
+      board[startRow][startCol] = 0;
+    }
+    return ans;
   }
   private boolean solveHelper(int row,int col,int index) {
     if (index == board.length * board[0].length) {
@@ -71,5 +75,34 @@ public class KnightBoard {
       }
     }
     return false;
+  }
+  public int countSolutions(int startRow, int startCol) {
+    if (!isEmpty()) {
+      throw new IllegalStateException();
+    }
+    try {
+      board[startRow][startCol] = 1;
+    }
+    catch (ArrayIndexOutOfBoundsException a) {
+      throw new IllegalArgumentException();
+    }
+    int ans = count(startRow,startCol,1);
+    board = new int[board.length][board[0].length];
+    return ans;
+  }
+  private int count(int row,int col,int index) {
+    if (index == board.length * board[0].length) {
+      return 1;
+    }
+    int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
+    for (int x = 0; x < hops.length; x += 2) {
+      if (add(hops[x],hops[x+1],index+1)) {
+        if (solveHelper(hops[x],hops[x+1],index+1)) {
+          return 1;
+        }
+        remove(hops[x],hops[x+1]);
+      }
+    }
+    return 0;
   }
 }
