@@ -1,6 +1,9 @@
 public class KnightBoard {
   int[][] board;
   public KnightBoard(int rows, int cols) {
+    if (rows <= 0 || cols <= 0) {
+      throw new IllegalArgumentException();
+    }
     board = new int[rows][cols];
   }
   public String toString() {
@@ -33,7 +36,10 @@ public class KnightBoard {
     return true;
   }
   public void remove(int row, int col) {
-    board[row][col] = 0;
+   try {
+     board[row][col] = 0;
+   }
+   catch (ArrayIndexOutOfBoundsException()) {}
   }
   private boolean isEmpty() {
     for (int x = 0; x < board.length; x++) {
