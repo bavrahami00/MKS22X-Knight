@@ -94,15 +94,14 @@ public class KnightBoard {
     if (index == board.length * board[0].length) {
       return 1;
     }
+    int ans = 0;
     int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
     for (int x = 0; x < hops.length; x += 2) {
       if (add(hops[x],hops[x+1],index+1)) {
-        if (solveHelper(hops[x],hops[x+1],index+1)) {
-          return 1;
-        }
+        ans += count(hops[x],hops[x+1],index+1);
         remove(hops[x],hops[x+1]);
       }
     }
-    return 0;
+    return ans;
   }
 }
