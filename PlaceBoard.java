@@ -44,6 +44,24 @@ public class PlaceBoard {//extends Comparable{
     }
     return ans;
   }
+  public void addKnight(int row, int col) {
+    int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
+    places[row][col] += 10;
+    for (int x = 0; x < hops.length; x += 2) {
+      if (places[hops[x]][hops[x+1]] < 10) {
+        places[hops[x]][hops[x+1]] += 1;
+      }
+    }
+  }
+  public void removeKnight(int row, int col) {
+    int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
+    places[row][col] -= 10;
+    for (int x = 0; x < hops.length; x += 2) {
+      if (places[hops[x]][hops[x+1]] != 10) {
+        places[hops[x]][hops[x+1]] -= 1;
+      }
+    }
+  }
   public int[] min(int row, int col) {
     int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
     int[] ans = new int[2];
