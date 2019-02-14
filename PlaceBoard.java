@@ -44,34 +44,43 @@ public class PlaceBoard {//extends Comparable{
     }
     return ans;
   }
-  public void addKnight(int row, int col) {
-    int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
-    places[row][col] += 10;
-    for (int x = 0; x < hops.length; x += 2) {
-      if (places[hops[x]][hops[x+1]] < 10) {
-        places[hops[x]][hops[x+1]] += 1;
-      }
-    }
-  }
-  public void removeKnight(int row, int col) {
-    int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
-    places[row][col] -= 10;
-    for (int x = 0; x < hops.length; x += 2) {
-      if (places[hops[x]][hops[x+1]] != 10) {
-        places[hops[x]][hops[x+1]] -= 1;
-      }
-    }
-  }
   public int[] min(int row, int col) {
-    int[] hops = new int[] {row+2,col+1,row+2,col-1,row-2,col+1,row-2,col-1,row+1,col+2,row+1,col-2,row-1,col+2,row-1,col-2};
-    int[] ans = new int[2];
-    int small = 9;
+    ArrayList<Integer> hops = new ArrayList<Integer>();
+    hops.add(row+2);  hops.add(col+1);
+    hops.add(row+2);  hops.add(col-1);
+    hops.add(row-2);  hops.add(col+1);
+    hops.add(row-2);  hops.add(col-1);
+    hops.add(row+1);  hops.add(col+2);
+    hops.add(row+1);  hops.add(col-2);
+    hops.add(row-1);  hops.add(col+2);
+    hops.add(row-1);  hops.add(col-2);
     for (int x = 0; x < hops.length; x += 2) {
-      if (places[hops[x]][hops[x+1]] < min) {
-        min = places[hops[x]][hops[x+1]];
-        ans[0] = hops[x];
-        ans[1] = hops[x+1];
+      try {
+        if (board[hops[x]][hops[x+1]] != 0) {
+          hops.remove(x);
+          hops.remove(x);
+        }
       }
+      catch (ArrayIndexOutOfBoundsException a) {
+        hops.remove(x);
+        hops.remove(x);
+      }
+    }
+    int[] ans = new int[hops.size()];
+    int so = 0;
+    while (hops.size() > 0) {
+      int small = 9;
+      int num = -1;
+      for (int i = 0; i < hops.size(); i += 2) {
+        if (places[hops[x]][hops[x+1]] < small) {
+          num = x;
+          small = places[hops[x]][hops[x+1]];
+        }
+      }
+      ans[so] = hops[num];
+      ans[so+1] = hops[num+1];
+      hops.remove(num);
+      hops.remove(num);
     }
     return ans;
   }
