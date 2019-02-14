@@ -1,10 +1,12 @@
 public class KnightBoard {
-  int[][] board;
+  private int[][] board;
+  public PlaceBoard p;
   public KnightBoard(int rows, int cols) {
     if (rows <= 0 || cols <= 0) {
       throw new IllegalArgumentException();
     }
     board = new int[rows][cols];
+    p = new PlaceBoard(board);
   }
   public String toString() {
     String ans = "";
@@ -67,7 +69,15 @@ public class KnightBoard {
     }
     return ans;
   }
-  private boolean solveHelper(int row,int col,int index) {
+  private boolean solveHelper(int row, int col, int index) {
+    if (index == board.length * board[0].length) {
+      return true;
+    }
+    int[] next = p.min(row,col);
+    add(next[0],next[1],index+1);
+    return solveHelper(next[0],next[1],index+1);
+  }
+  /*private boolean solveHelper(int row,int col,int index) {
     if (index == board.length * board[0].length) {
       return true;
     }
@@ -81,7 +91,7 @@ public class KnightBoard {
       }
     }
     return false;
-  }
+  }*/
   public int countSolutions(int startRow, int startCol) {
     if (!isEmpty()) {
       throw new IllegalStateException();
