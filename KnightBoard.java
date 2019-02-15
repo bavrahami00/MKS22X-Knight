@@ -1,6 +1,6 @@
 public class KnightBoard {
   private int[][] board;
-  public PlaceBoard p;
+  private PlaceBoard p;
   public KnightBoard(int rows, int cols) {
     if (rows <= 0 || cols <= 0) {
       throw new IllegalArgumentException();
@@ -76,10 +76,12 @@ public class KnightBoard {
     int[] next = p.min(row,col);
     for (int x = 0; x < next.length; x += 2) {
       add(next[x],next[x+1],index+1);
+      p.add(next[x],next[x+1]);
       if (solveHelper(next[x],next[x+1],index+1)) {
         return true;
       }
       remove(next[x],next[x+1]);
+      p.remove(next[x],next[x+1]);
     }
     return false;
   }
@@ -109,7 +111,8 @@ public class KnightBoard {
       throw new IllegalArgumentException();
     }
     int ans = count(startRow,startCol,1);
-    board = new int[board.length][board[0].length];
+//    board = new int[board.length][board[0].length];
+    board[startRow][startCol] = 0;
     return ans;
   }
   private int count(int row,int col,int index) {

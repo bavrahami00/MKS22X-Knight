@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 public class PlaceBoard {//extends Comparable{
-  int[][] board;
-  int[][] places;
+  private int[][] board;
+  private int[][] places;
   public PlaceBoard(int[][] b) {
     board = b;
     places = new int[board.length][board[0].length];
@@ -28,7 +28,7 @@ public class PlaceBoard {//extends Comparable{
       }
     }
   }
-  public String toString() {
+  /*public String toString() {
     String ans = "";
     for (int x = 0; x < places.length; x++) {
       for (int i = 0; i < places[0].length-1; i++) {
@@ -44,8 +44,20 @@ public class PlaceBoard {//extends Comparable{
       ans += "\n";
     }
     return ans;
+  }*/
+  public void add(int row, int col) {
+    process(row,col,-1);
   }
-  public int[] min(int row, int col) {
+  public void remove(int row, int col) {
+    process(row,col,1);
+  }
+  private void process(int row, int col, int value) {
+    ArrayList<Integer> loc = first(row,col);
+    for (int x = 0; x < loc.size(); x += 2) {
+      places[loc.get(x)][loc.get(x+1)] += value;
+    }
+  }
+  public ArrayList<Integer> first(int row, int col) {
     ArrayList<Integer> hops = new ArrayList<Integer>();
     hops.add(row+2);  hops.add(col+1);
     hops.add(row+2);  hops.add(col-1);
@@ -69,6 +81,10 @@ public class PlaceBoard {//extends Comparable{
         x -= 2;
       }
     }
+    return hops;
+  }
+  public int[] min(int row, int col) {
+    ArrayList<Integer> hops = first(row,col);
     int[] ans = new int[hops.size()];
     int so = 0;
     while (hops.size() > 0) {
