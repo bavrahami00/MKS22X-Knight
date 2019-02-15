@@ -41,7 +41,7 @@ public class KnightBoard {
    try {
      board[row][col] = 0;
    }
-   catch (ArrayIndexOutOfBoundsException()) {}
+   catch (ArrayIndexOutOfBoundsException a) {}
   }
   private boolean isEmpty() {
     for (int x = 0; x < board.length; x++) {
@@ -74,8 +74,13 @@ public class KnightBoard {
       return true;
     }
     int[] next = p.min(row,col);
-    add(next[0],next[1],index+1);
-    return solveHelper(next[0],next[1],index+1);
+    for (int x = 0; x < next.length; x += 2) {
+      add(next[x],next[x+1],index+1);
+      if (solveHelper(next[x],next[x+1],index+1)) {
+        return true;
+      }
+      remove(next[x],next[x+1]);
+    }
   }
   /*private boolean solveHelper(int row,int col,int index) {
     if (index == board.length * board[0].length) {
