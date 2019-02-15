@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class PlaceBoard {//extends Comparable{
   int[][] board;
   int[][] places;
@@ -54,16 +55,18 @@ public class PlaceBoard {//extends Comparable{
     hops.add(row+1);  hops.add(col-2);
     hops.add(row-1);  hops.add(col+2);
     hops.add(row-1);  hops.add(col-2);
-    for (int x = 0; x < hops.length; x += 2) {
+    for (int x = 0; x < hops.size(); x += 2) {
       try {
-        if (board[hops[x]][hops[x+1]] != 0) {
+        if (board[hops.get(x)][hops.get(x+1)] != 0) {
           hops.remove(x);
           hops.remove(x);
+          x -= 2;
         }
       }
       catch (ArrayIndexOutOfBoundsException a) {
         hops.remove(x);
         hops.remove(x);
+        x -= 2;
       }
     }
     int[] ans = new int[hops.size()];
@@ -71,16 +74,17 @@ public class PlaceBoard {//extends Comparable{
     while (hops.size() > 0) {
       int small = 9;
       int num = -1;
-      for (int i = 0; i < hops.size(); i += 2) {
-        if (places[hops[x]][hops[x+1]] < small) {
+      for (int x = 0; x < hops.size(); x += 2) {
+        if (places[hops.get(x)][hops.get(x+1)] < small) {
           num = x;
-          small = places[hops[x]][hops[x+1]];
+          small = places[hops.get(x)][hops.get(x+1)];
         }
       }
-      ans[so] = hops[num];
-      ans[so+1] = hops[num+1];
+      ans[so] = hops.get(num);
+      ans[so+1] = hops.get(num+1);
       hops.remove(num);
       hops.remove(num);
+      so += 2;
     }
     return ans;
   }

@@ -81,6 +81,7 @@ public class KnightBoard {
       }
       remove(next[x],next[x+1]);
     }
+    return false;
   }
   /*private boolean solveHelper(int row,int col,int index) {
     if (index == board.length * board[0].length) {
